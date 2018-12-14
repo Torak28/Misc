@@ -1,0 +1,6 @@
+*.jpg
+*.png
+*.pytest_cache
+*.vscode
+Books
+Kartka

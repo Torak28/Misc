@@ -6,4 +6,4 @@ __Visualization__:
 
 ![alt text][img]
 
-[img]: https://raw.githubusercontent.com/Torak28/Misc/master/LLabirynt/out.png
+[img]: https://raw.githubusercontent.com/Torak28/Misc/master/Labirynt/out.png

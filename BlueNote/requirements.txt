@@ -5,4 +5,4 @@
 beautifulsoup4 == 4.6.0
 
 # BlueNote.py: 1
-requests == 2.18.4
+requests == 2.21.0

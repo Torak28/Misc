@@ -16,7 +16,6 @@ Moja lista książek do przeczytania, zrozumienia i obczajenia.
  * _Epos o Gilgameszu_
  * _Jane Austen_, __Duma i uprzedzenie__
 
-
 ### Klasyka Literatury:
 
  * _Autor tekstu_, __Tytuł__

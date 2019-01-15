@@ -1,6 +1,7 @@
 *.jpg
 *.pytest_cache
 *.vscode
+*.mp3
 input
 output
 Kartka

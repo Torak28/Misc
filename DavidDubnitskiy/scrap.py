@@ -7,6 +7,6 @@ with open('input', 'r') as f:
 	for i in range(len(imgs)):
 		img = imgs[i]['src']
 		if '/photo/' in img:
-			with open(str(i) +  'jpg', 'wb') as ff:
+			with open(str(i) + '.jpg', 'wb') as ff:
 				ff.write(requests.get(img).content)
 				print(str(i))

@@ -3,6 +3,8 @@ from bs4 import BeautifulSoup
 
 requests.adapters.DEFAULT_RETRIES = 5
 
+# rewrite using https://pypi.org/project/requests-html/
+
 base = 'https://500px.com'
 some_id = '?ctx_page=1&from=user&user_id=5461522'
 

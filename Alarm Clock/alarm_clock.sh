@@ -47,12 +47,12 @@ sleep 2
 # Any commands you want to launch after wakeup can be placed here
 # Remember: sudo may have expired by now
 
-# Wake up with monitor enabled N.B. change "on" for "off" if 
+# Wake up with monitor enabled N.B. change "on" for "off" if
 # you want the monitor to be disabled on wake
 xset dpms force on
 
 # and a fresh console
 clear
 amixer set Master playback 65536
-audacious -p alarm.mp3
+audacious -p /home/torak28/Desktop/dev/Misc/Alarm_Clock
 echo "Good morning!"

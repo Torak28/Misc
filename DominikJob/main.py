@@ -1,12 +1,12 @@
 import xlrd
 import datetime
 import os
-from pathlib import Path
 from tkinter import filedialog
 from tkinter import *
 
 
 def perform(xlxs_file, output_file):
+    output_file = xlxs_file.replace(text_xlxs.get(), output_file)
     wb = xlrd.open_workbook((xlxs_file))
     sheet = wb.sheet_by_index(0)
 

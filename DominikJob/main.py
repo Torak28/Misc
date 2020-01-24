@@ -6,6 +6,10 @@ from tkinter import *
 
 
 def perform(xlxs_file, output_file):
+    return_str = 'Operation done'
+    fail_count = 0
+
+    os.chdir(os.path.dirname(xlxs_file))
     output_file = xlxs_file.replace(text_xlxs.get(), output_file)
     wb = xlrd.open_workbook((xlxs_file))
     sheet = wb.sheet_by_index(0)
@@ -41,38 +45,48 @@ def perform(xlxs_file, output_file):
                 file_to_open = sheet.cell_value(row_number, data['open_file']['row_xlsx'])
                 name_file_to_save = sheet.cell_value(row_number, data['output_file']['row_xlsx'])
                 str_date = datetime.datetime.today().strftime('%d.%m.%Y\t%X')
-                with open(file_to_open) as fp:
-                    str_to_save = ''
-                    for i, line in enumerate(fp):
-                        if i + 1 in data['code']['row_txt']:
-                            str_to_save += str(sheet.cell_value(row_number, data['code']['row_xlsx'])) + '\n'
-                        elif i + 1 in data['name']['row_txt']:
-                            str_to_save += str(sheet.cell_value(row_number, data['name']['row_xlsx'])) + '\n'
-                        elif i + 1 in data['date']['row_txt']:
-                            str_to_save += str_date + '\n'
-                        elif i + 1 in data['light_color']['row_txt']:
-                            str_to_save += str(int(sheet.cell_value(row_number, data['light_color']['row_xlsx']))) + '\n'
-                        elif i + 1 in data['cri']['row_txt']:
-                            str_to_save += str(int(sheet.cell_value(row_number, data['cri']['row_xlsx']))) + '\n'
-                        elif i + 1 in data['power']['row_txt']:
-                            str_to_save += str(int(sheet.cell_value(row_number, data['power']['row_xlsx']))) + '\n'
-                        elif i + 1 in data['led_chip']['row_txt']:
-                            str_to_save += str(float(sheet.cell_value(row_number, data['led_chip']['row_xlsx']))) + '\n'
-                        elif i + 1 in data['type_of_lamps']['row_txt']:
-                            str_to_save += str(sheet.cell_value(row_number, data['type_of_lamps']['row_xlsx'])) + '\n'
-                        else:
-                            str_to_save += line
-                f = open(name_file_to_save, 'w+')
-                f.write(str_to_save)
-                f.close()
                 out = open(output_file, 'a')
-                out_str = str(sheet.cell_value(row_number, data['code']['row_xlsx'])) + '\t' + 'done' + '\n'
-                out.write(out_str)
+                out_str = ''
+                try:
+                    with open(file_to_open) as fp:
+                        str_to_save = ''
+                        for i, line in enumerate(fp):
+                            if i + 1 in data['code']['row_txt']:
+                                str_to_save += str(sheet.cell_value(row_number, data['code']['row_xlsx'])) + '\n'
+                            elif i + 1 in data['name']['row_txt']:
+                                str_to_save += str(sheet.cell_value(row_number, data['name']['row_xlsx'])) + '\n'
+                            elif i + 1 in data['date']['row_txt']:
+                                str_to_save += str_date + '\n'
+                            elif i + 1 in data['light_color']['row_txt']:
+                                str_to_save += str(int(sheet.cell_value(row_number, data['light_color']['row_xlsx']))) + '\n'
+                            elif i + 1 in data['cri']['row_txt']:
+                                str_to_save += str(int(sheet.cell_value(row_number, data['cri']['row_xlsx']))) + '\n'
+                            elif i + 1 in data['power']['row_txt']:
+                                str_to_save += str(int(sheet.cell_value(row_number, data['power']['row_xlsx']))) + '\n'
+                            elif i + 1 in data['led_chip']['row_txt']:
+                                str_to_save += str(float(sheet.cell_value(row_number, data['led_chip']['row_xlsx']))) + '\n'
+                            elif i + 1 in data['type_of_lamps']['row_txt']:
+                                str_to_save += str(sheet.cell_value(row_number, data['type_of_lamps']['row_xlsx'])) + '\n'
+                            else:
+                                str_to_save += line
+                    f = open(name_file_to_save, 'w+')
+                    f.write(str_to_save)
+                    f.close()
+                    out_str += str(sheet.cell_value(row_number, data['code']['row_xlsx'])) + '\t' + 'done' + '\n'
+                except IOError:
+                    out_str += str(sheet.cell_value(row_number, data['code']['row_xlsx'])) + '\t' + 'file not found(' + file_to_open + ')\n'
+                    fail_count += 1
+                finally:
+                    out.write(out_str)
+
             else:
                 pass
             row_number += 1
         except IndexError as bad_thing:
             wat = False
+    if fail_count != 0:
+        return_str += '\n' + str(fail_count) + 'file(s) were not find'
+    return return_str
 
 fields = ['XLXS File', 'Output File']
 
@@ -106,9 +120,7 @@ def select_xlxs(root):
 def Info():
     window = Toplevel(root)
     window.title('Info')
-    photo = PhotoImage(file='pic.gif')
-    w1 = Label(window, image=photo)
-    w1.image = photo
+    w1 = Label(window)
     w1.pack(side='bottom')
     w2 = Label(window,  padx = 10, justify=LEFT, text="Aplikacja do generowania plików LDT na podstawie XLXS\nAutor: Jarosław Ciołek-Żelechowski\nurl: https://github.com/Torak28/Misc/tree/master/DominikJob")
     w2.pack(side='top')
@@ -133,10 +145,10 @@ def Run(e):
         Ok = Button(window, text='OK', command=(lambda e=window: close_window(e)))
         Ok.pack(side=BOTTOM, padx=5, pady=5)
     else:
-        perform(str(path_to_xlsl.get()), e[0][1].get())
+        odp_str = perform(str(path_to_xlsl.get()), e[0][1].get())
         window = Toplevel(root)
         window.title('Error')
-        w5 = Label(window,  padx = 10, justify=LEFT, text="Done")
+        w5 = Label(window,  padx = 10, justify=LEFT, text=odp_str)
         w5.pack(side='top')
         Ok = Button(window, text='OK', command=(lambda e=window: close_window(e)))
         Ok.pack(side=BOTTOM, padx=5, pady=5)

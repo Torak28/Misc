@@ -5,6 +5,19 @@ from tkinter import filedialog
 from tkinter import *
 
 
+data = {
+    'code' :            { 'row_xlsx': 1, 'row_txt': [8, 10]},
+    'name' :            { 'row_xlsx': 2, 'row_txt': [9, 11]},
+    'date' :            { 'row_xlsx': '','row_txt': [12]},
+    'light_color' :     { 'row_xlsx': 3, 'row_txt': [30]},
+    'cri' :             { 'row_xlsx': 4, 'row_txt': [31]},
+    'power' :           { 'row_xlsx': 5, 'row_txt': [32]},
+    'led_chip' :        { 'row_xlsx': 6, 'row_txt': [29]},
+    'type_of_lamps' :   { 'row_xlsx': 7, 'row_txt': [28]},
+    'open_file' :       { 'row_xlsx': 8, 'row_txt': []},
+    'output_file' :     { 'row_xlsx': 9, 'row_txt': []}
+}
+
 def perform(xlxs_file, output_file):
     return_str = 'Operation done'
     fail_count = 0
@@ -13,20 +26,6 @@ def perform(xlxs_file, output_file):
     output_file = xlxs_file.replace(text_xlxs.get(), output_file)
     wb = xlrd.open_workbook((xlxs_file))
     sheet = wb.sheet_by_index(0)
-
-    data = {
-        'code' :            { 'row_xlsx': 1, 'row_txt': [8, 10]},
-        'name' :            { 'row_xlsx': 2, 'row_txt': [9, 11]},
-        'date' :            { 'row_xlsx': '','row_txt': [12]},
-        'light_color' :     { 'row_xlsx': 3, 'row_txt': [30]},
-        'cri' :             { 'row_xlsx': 4, 'row_txt': [31]},
-        'power' :           { 'row_xlsx': 5, 'row_txt': [32]},
-        'led_chip' :        { 'row_xlsx': 6, 'row_txt': [29]},
-        'type_of_lamps' :   { 'row_xlsx': 7, 'row_txt': [28]},
-        'open_file' :       { 'row_xlsx': 8, 'row_txt': []},
-        'output_file' :     { 'row_xlsx': 9, 'row_txt': []},
-        'status' :          { 'row_xlsx': 10}
-    }
 
     row_number = 0
     wat = True
@@ -125,6 +124,25 @@ def Info():
     w2 = Label(window,  padx = 10, justify=LEFT, text="Aplikacja do generowania plików LDT na podstawie XLXS\nAutor: Jarosław Ciołek-Żelechowski\nurl: https://github.com/Torak28/Misc/tree/master/DominikJob")
     w2.pack(side='top')
 
+def Options(e):
+    print(f'{list(data.keys())}')
+    window = Toplevel(root)
+    window.title('Options')
+    w1 = Label(window)
+    w1.pack(side='bottom')
+    lab = Label(window,  padx = 10, justify=LEFT, text="label1")
+    lab.pack(side=LEFT)
+    lab2 = Label(window,  padx = 10, justify=LEFT, text="xlsx column:")
+    lab2.pack(side=LEFT)
+    ent1 = Entry(window)
+    ent1.pack(side=LEFT, expand=YES, fill=X)
+    lab3 = Label(window,  padx = 10, justify=LEFT, text="ldt row:")
+    lab3.pack(side=LEFT)
+    ent2 = Entry(window)
+    ent2.pack(side=LEFT, expand=YES, fill=X)
+    check = Checkbutton(window, text = "required")
+    check.pack(side=LEFT, expand=YES, fill=X)
+
 def Run(e):
 
     def close_window(root): 
@@ -170,4 +188,6 @@ if __name__ == '__main__':
     Info.pack(side=RIGHT, padx=5, pady=5)
     run = Button(root, text='Run', command=(lambda e=ents: Run(e)))
     run.pack(side=RIGHT, padx=5, pady=5)
+    options = Button(root, text='Options', command=(lambda e=ents: Options(e)))
+    options.pack(side=RIGHT, padx=5, pady=5)
     root.mainloop()

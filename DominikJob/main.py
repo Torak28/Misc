@@ -3,19 +3,29 @@ import datetime
 import os
 from tkinter import filedialog
 from tkinter import *
+from string import ascii_uppercase
 
 
+LETTERS = {letter: str(index) for index, letter in enumerate(ascii_uppercase, start=1)}
 data = {
-    'code' :            { 'row_xlsx': 1, 'row_txt': [8, 10]},
-    'name' :            { 'row_xlsx': 2, 'row_txt': [9, 11]},
-    'date' :            { 'row_xlsx': '','row_txt': [12]},
-    'light_color' :     { 'row_xlsx': 3, 'row_txt': [30]},
-    'cri' :             { 'row_xlsx': 4, 'row_txt': [31]},
-    'power' :           { 'row_xlsx': 5, 'row_txt': [32]},
-    'led_chip' :        { 'row_xlsx': 6, 'row_txt': [29]},
-    'type_of_lamps' :   { 'row_xlsx': 7, 'row_txt': [28]},
+    'code' :            { 'row_xlsx': 1, 'row_txt': [8, 10], 'req': True},
+    'name' :            { 'row_xlsx': 2, 'row_txt': [9, 11], 'req': True},
+    'date' :            { 'row_xlsx': '','row_txt': [12], 'req': True},
+    'light_color' :     { 'row_xlsx': 3, 'row_txt': [30], 'req': True},
+    'cri' :             { 'row_xlsx': 4, 'row_txt': [31], 'req': True},
+    'power' :           { 'row_xlsx': 5, 'row_txt': [32], 'req': True},
+    'led_chip' :        { 'row_xlsx': 6, 'row_txt': [29], 'req': True},
+    'type_of_lamps' :   { 'row_xlsx': 7, 'row_txt': [28], 'req': True},
     'open_file' :       { 'row_xlsx': 8, 'row_txt': []},
-    'output_file' :     { 'row_xlsx': 9, 'row_txt': []}
+    'output_file' :     { 'row_xlsx': 9, 'row_txt': []},
+
+    'symetric' :        { 'row_xlsx': False, 'row_txt': [2], 'req': False},
+    'light_sym' :       { 'row_xlsx': False, 'row_txt': [3], 'req': False},
+    'length' :          { 'row_xlsx': False, 'row_txt': [13], 'req': False},
+    'width' :           { 'row_xlsx': False, 'row_txt': [14], 'req': False},
+    'height' :          { 'row_xlsx': False, 'row_txt': [15], 'req': False},
+    'length_area' :     { 'row_xlsx': False, 'row_txt': [16], 'req': False},
+    'width_area' :      { 'row_xlsx': False, 'row_txt': [17], 'req': False}
 }
 
 def perform(xlxs_file, output_file):
@@ -26,6 +36,24 @@ def perform(xlxs_file, output_file):
     output_file = xlxs_file.replace(text_xlxs.get(), output_file)
     wb = xlrd.open_workbook((xlxs_file))
     sheet = wb.sheet_by_index(0)
+
+    all_cols = []
+    for i in range(sheet.ncols):
+        all_cols.append(str(sheet.cell_value(0, i)))
+    
+    if 'Length of luminaire' in all_cols:
+        data['length']['row_xlsx'] = all_cols.index('Length of luminaire')
+    elif 'Width of luminaire' in all_cols:
+        data['width']['row_xlsx'] = all_cols.index('Width of luminaire')
+    elif 'Height of luminaire' in all_cols:
+        data['height']['row_xlsx'] = all_cols.index('Height of luminaire')
+    elif 'Length of luminous area' in all_cols:
+        data['length_area']['row_xlsx'] = all_cols.index('Length of luminous area')
+    elif 'Width of luminous area' in all_cols:
+        data['width_area']['row_xlsx'] = all_cols.index('Width of luminous area')
+
+    print(data)
+    print(data['height']['row_xlsx'])
 
     row_number = 0
     wat = True
@@ -66,6 +94,33 @@ def perform(xlxs_file, output_file):
                                 str_to_save += str(float(sheet.cell_value(row_number, data['led_chip']['row_xlsx']))) + '\n'
                             elif i + 1 in data['type_of_lamps']['row_txt']:
                                 str_to_save += str(sheet.cell_value(row_number, data['type_of_lamps']['row_xlsx'])) + '\n'
+
+                            elif i + 1 in data['symetric']['row_txt'] and type(data['symetric']['row_xlsx']) is int:
+                                if sheet.cell_type(row_number, data['symetric']['row_xlsx']) == 2:
+                                    str_to_save += str(sheet.cell_value(row_number, data['symetric']['row_xlsx'])) + '\n'
+                            elif i + 1 in data['light_sym']['row_txt'] and type(data['light_sym']['row_xlsx']) is int:
+                                if sheet.cell_type(row_number, data['light_sym']['row_xlsx']) == 2:
+                                    str_to_save += str(sheet.cell_value(row_number, data['light_sym']['row_xlsx'])) + '\n'
+                            elif i + 1 in data['length']['row_txt'] and type(data['length']['row_xlsx']) is int:
+                                if sheet.cell_type(row_number, data['length']['row_xlsx']) == 2:
+                                    str_to_save += str(sheet.cell_value(row_number, data['length']['row_xlsx'])) + '\n'
+                            elif i + 1 in data['width']['row_txt'] and type(data['width']['row_xlsx']) is int:
+                                if sheet.cell_type(row_number, data['width']['row_xlsx']) == 2:
+                                    str_to_save += str(sheet.cell_value(row_number, data['width']['row_xlsx'])) + '\n'
+                            elif i + 1 in data['height']['row_txt'] and type(data['height']['row_xlsx']) is int:
+                                print('height')
+                                print(row_number)
+                                if sheet.cell_type(row_number, data['height']['row_xlsx']) == 2:
+                                    print('estem')
+                                    str_to_save += str(sheet.cell_value(row_number, data['height']['row_xlsx'])) + '\n'
+                                else:
+                                    str_to_save += line
+                            elif i + 1 in data['length_area']['row_txt'] and type(data['length_area']['row_xlsx']) is int:
+                                if sheet.cell_type(row_number, data['length_area']['row_xlsx']) == 2:
+                                    str_to_save += str(sheet.cell_value(row_number, data['length_area']['row_xlsx'])) + '\n'
+                            elif i + 1 in data['width_area']['row_txt'] and type(data['width_area']['row_xlsx']) is int:
+                                if sheet.cell_type(row_number, data['width_area']['row_xlsx']) == 2:
+                                    str_to_save += str(sheet.cell_value(row_number, data['width_area']['row_xlsx'])) + '\n'
                             else:
                                 str_to_save += line
                     f = open(name_file_to_save, 'w+')
@@ -143,7 +198,8 @@ def Options(e):
         lab2.pack(side=LEFT)
         ent1Text = StringVar()
         ent1 = Entry(w2, textvariable=ent1Text)
-        ent1Text.set(data[key]['row_xlsx'])
+        wtf_is_this_line = list(LETTERS.keys())[list(LETTERS.values()).index(str(data[key]['row_xlsx']))]
+        ent1Text.set(wtf_is_this_line)
         ent1.pack(side=LEFT, expand=YES, fill=X)
         lab3 = Label(w2,  padx = 10, text="ldt row:")
         lab3.pack(side=LEFT)
@@ -199,6 +255,6 @@ if __name__ == '__main__':
     Info.pack(side=RIGHT, padx=5, pady=5)
     run = Button(root, text='Run', command=(lambda e=ents: Run(e)))
     run.pack(side=RIGHT, padx=5, pady=5)
-    options = Button(root, text='Options', command=(lambda e=ents: Options(e)))
-    options.pack(side=RIGHT, padx=5, pady=5)
+    # options = Button(root, text='Options', command=(lambda e=ents: Options(e)))
+    # options.pack(side=RIGHT, padx=5, pady=5)
     root.mainloop()

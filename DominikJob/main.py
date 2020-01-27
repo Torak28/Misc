@@ -43,17 +43,17 @@ def perform(xlxs_file, output_file):
     
     if 'długość oprawy' in all_cols:
         data['length']['row_xlsx'] = all_cols.index('długość oprawy')
-    elif 'szerokość oprawy' in all_cols:
+    if 'szerokość oprawy' in all_cols:
         data['width']['row_xlsx'] = all_cols.index('szerokość oprawy')
-    elif 'wysokość oprawy' in all_cols:
+    if 'wysokość oprawy' in all_cols:
         data['height']['row_xlsx'] = all_cols.index('wysokość oprawy')
-    elif 'długość obszaru świetlnego' in all_cols:
+    if 'długość obszaru świetlnego' in all_cols:
         data['length_area']['row_xlsx'] = all_cols.index('długość obszaru świetlnego')
-    elif 'szerokość obszaru świetlnego' in all_cols:
+    if 'szerokość obszaru świetlnego' in all_cols:
         data['width_area']['row_xlsx'] = all_cols.index('szerokość obszaru świetlnego')
-    elif 'oprawa symetryczna' in all_cols:
+    if 'oprawa symetryczna' in all_cols:
         data['symetric']['row_xlsx'] = all_cols.index('oprawa symetryczna')
-    elif 'źródło światła symetryczne' in all_cols:
+    if 'źródło światła symetryczne' in all_cols:
         data['light_sym']['row_xlsx'] = all_cols.index('źródło światła symetryczne')
 
     row_number = 0
@@ -97,47 +97,47 @@ def perform(xlxs_file, output_file):
                                 str_to_save += str(sheet.cell_value(row_number, data['type_of_lamps']['row_xlsx'])) + '\n'
 
                             elif i + 1 in data['symetric']['row_txt'] and type(data['symetric']['row_xlsx']) is int:
-                                if sheet.cell_type(row_number, data['symetric']['row_xlsx']) == 2:
+                                if sheet.cell_type(row_number, data['symetric']['row_xlsx']) == 2 or sheet.cell_type(row_number, data['symetric']['row_xlsx']) == 1:
                                     str_to_save += str(sheet.cell_value(row_number, data['symetric']['row_xlsx'])) + '\n'
                                 else:
                                     str_to_save += line
                             elif i + 1 in data['light_sym']['row_txt'] and type(data['light_sym']['row_xlsx']) is int:
-                                if sheet.cell_type(row_number, data['light_sym']['row_xlsx']) == 2:
+                                if sheet.cell_type(row_number, data['light_sym']['row_xlsx']) == 2 or sheet.cell_type(row_number, data['light_sym']['row_xlsx']) == 1:
                                     str_to_save += str(sheet.cell_value(row_number, data['light_sym']['row_xlsx'])) + '\n'
                                 else:
                                     str_to_save += line
                             elif i + 1 in data['length']['row_txt'] and type(data['length']['row_xlsx']) is int:
-                                if sheet.cell_type(row_number, data['length']['row_xlsx']) == 2:
+                                if sheet.cell_type(row_number, data['length']['row_xlsx']) == 2 or sheet.cell_type(row_number, data['length']['row_xlsx']) == 1:
                                     str_to_save += str(sheet.cell_value(row_number, data['length']['row_xlsx'])) + '\n'
                                 else:
                                     str_to_save += line
                             elif i + 1 in data['width']['row_txt'] and type(data['width']['row_xlsx']) is int:
-                                if sheet.cell_type(row_number, data['width']['row_xlsx']) == 2:
+                                if sheet.cell_type(row_number, data['width']['row_xlsx']) == 2 or sheet.cell_type(row_number, data['width']['row_xlsx']) == 1:
                                     str_to_save += str(sheet.cell_value(row_number, data['width']['row_xlsx'])) + '\n'
                                 else:
                                     str_to_save += line
                             elif i + 1 in data['height']['row_txt'] and type(data['height']['row_xlsx']) is int:
-                                if sheet.cell_type(row_number, data['height']['row_xlsx']) == 2:
+                                if sheet.cell_type(row_number, data['height']['row_xlsx']) == 2 or sheet.cell_type(row_number, data['height']['row_xlsx']) == 1:
                                     str_to_save += str(sheet.cell_value(row_number, data['height']['row_xlsx'])) + '\n'
                                 else:
                                     str_to_save += line
                             elif i + 1 in data['length_area']['row_txt'] and type(data['length_area']['row_xlsx']) is int:
-                                if sheet.cell_type(row_number, data['length_area']['row_xlsx']) == 2:
+                                if sheet.cell_type(row_number, data['length_area']['row_xlsx']) == 2 or sheet.cell_type(row_number, data['length_area']['row_xlsx']) == 1:
                                     str_to_save += str(sheet.cell_value(row_number, data['length_area']['row_xlsx'])) + '\n'
                                 else:
                                     str_to_save += line
                             elif i + 1 in data['width_area']['row_txt'] and type(data['width_area']['row_xlsx']) is int:
-                                if sheet.cell_type(row_number, data['width_area']['row_xlsx']) == 2:
+                                if sheet.cell_type(row_number, data['width_area']['row_xlsx']) == 2 or sheet.cell_type(row_number, data['width_area']['row_xlsx']) == 1:
                                     str_to_save += str(sheet.cell_value(row_number, data['width_area']['row_xlsx'])) + '\n'
                                 else:
                                     str_to_save += line
                             elif i + 1 in data['symetric']['row_txt'] and type(data['symetric']['row_xlsx']) is int:
-                                if sheet.cell_type(row_number, data['symetric']['row_xlsx']) == 2:
+                                if sheet.cell_type(row_number, data['symetric']['row_xlsx']) == 2 or sheet.cell_type(row_number, data['symetric']['row_xlsx']) == 1:
                                     str_to_save += str(sheet.cell_value(row_number, data['symetric']['row_xlsx'])) + '\n'
                                 else:
                                     str_to_save += line
                             elif i + 1 in data['light_sym']['row_txt'] and type(data['light_sym']['row_xlsx']) is int:
-                                if sheet.cell_type(row_number, data['light_sym']['row_xlsx']) == 2:
+                                if sheet.cell_type(row_number, data['light_sym']['row_xlsx']) == 2 or sheet.cell_type(row_number, data['light_sym']['row_xlsx']) == 1:
                                     str_to_save += str(sheet.cell_value(row_number, data['light_sym']['row_xlsx'])) + '\n'
                                 else:
                                     str_to_save += line

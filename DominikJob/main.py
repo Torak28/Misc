@@ -41,19 +41,20 @@ def perform(xlxs_file, output_file):
     for i in range(sheet.ncols):
         all_cols.append(str(sheet.cell_value(0, i)))
     
-    if 'Length of luminaire' in all_cols:
-        data['length']['row_xlsx'] = all_cols.index('Length of luminaire')
-    elif 'Width of luminaire' in all_cols:
-        data['width']['row_xlsx'] = all_cols.index('Width of luminaire')
-    elif 'Height of luminaire' in all_cols:
-        data['height']['row_xlsx'] = all_cols.index('Height of luminaire')
-    elif 'Length of luminous area' in all_cols:
-        data['length_area']['row_xlsx'] = all_cols.index('Length of luminous area')
-    elif 'Width of luminous area' in all_cols:
-        data['width_area']['row_xlsx'] = all_cols.index('Width of luminous area')
-
-    print(data)
-    print(data['height']['row_xlsx'])
+    if 'długość oprawy' in all_cols:
+        data['length']['row_xlsx'] = all_cols.index('długość oprawy')
+    elif 'szerokość oprawy' in all_cols:
+        data['width']['row_xlsx'] = all_cols.index('szerokość oprawy')
+    elif 'wysokość oprawy' in all_cols:
+        data['height']['row_xlsx'] = all_cols.index('wysokość oprawy')
+    elif 'długość obszaru świetlnego' in all_cols:
+        data['length_area']['row_xlsx'] = all_cols.index('długość obszaru świetlnego')
+    elif 'szerokość obszaru świetlnego' in all_cols:
+        data['width_area']['row_xlsx'] = all_cols.index('szerokość obszaru świetlnego')
+    elif 'oprawa symetryczna' in all_cols:
+        data['symetric']['row_xlsx'] = all_cols.index('oprawa symetryczna')
+    elif 'źródło światła symetryczne' in all_cols:
+        data['light_sym']['row_xlsx'] = all_cols.index('źródło światła symetryczne')
 
     row_number = 0
     wat = True
@@ -98,29 +99,48 @@ def perform(xlxs_file, output_file):
                             elif i + 1 in data['symetric']['row_txt'] and type(data['symetric']['row_xlsx']) is int:
                                 if sheet.cell_type(row_number, data['symetric']['row_xlsx']) == 2:
                                     str_to_save += str(sheet.cell_value(row_number, data['symetric']['row_xlsx'])) + '\n'
+                                else:
+                                    str_to_save += line
                             elif i + 1 in data['light_sym']['row_txt'] and type(data['light_sym']['row_xlsx']) is int:
                                 if sheet.cell_type(row_number, data['light_sym']['row_xlsx']) == 2:
                                     str_to_save += str(sheet.cell_value(row_number, data['light_sym']['row_xlsx'])) + '\n'
+                                else:
+                                    str_to_save += line
                             elif i + 1 in data['length']['row_txt'] and type(data['length']['row_xlsx']) is int:
                                 if sheet.cell_type(row_number, data['length']['row_xlsx']) == 2:
                                     str_to_save += str(sheet.cell_value(row_number, data['length']['row_xlsx'])) + '\n'
+                                else:
+                                    str_to_save += line
                             elif i + 1 in data['width']['row_txt'] and type(data['width']['row_xlsx']) is int:
                                 if sheet.cell_type(row_number, data['width']['row_xlsx']) == 2:
                                     str_to_save += str(sheet.cell_value(row_number, data['width']['row_xlsx'])) + '\n'
+                                else:
+                                    str_to_save += line
                             elif i + 1 in data['height']['row_txt'] and type(data['height']['row_xlsx']) is int:
-                                print('height')
-                                print(row_number)
                                 if sheet.cell_type(row_number, data['height']['row_xlsx']) == 2:
-                                    print('estem')
                                     str_to_save += str(sheet.cell_value(row_number, data['height']['row_xlsx'])) + '\n'
                                 else:
                                     str_to_save += line
                             elif i + 1 in data['length_area']['row_txt'] and type(data['length_area']['row_xlsx']) is int:
                                 if sheet.cell_type(row_number, data['length_area']['row_xlsx']) == 2:
                                     str_to_save += str(sheet.cell_value(row_number, data['length_area']['row_xlsx'])) + '\n'
+                                else:
+                                    str_to_save += line
                             elif i + 1 in data['width_area']['row_txt'] and type(data['width_area']['row_xlsx']) is int:
                                 if sheet.cell_type(row_number, data['width_area']['row_xlsx']) == 2:
                                     str_to_save += str(sheet.cell_value(row_number, data['width_area']['row_xlsx'])) + '\n'
+                                else:
+                                    str_to_save += line
+                            elif i + 1 in data['symetric']['row_txt'] and type(data['symetric']['row_xlsx']) is int:
+                                if sheet.cell_type(row_number, data['symetric']['row_xlsx']) == 2:
+                                    str_to_save += str(sheet.cell_value(row_number, data['symetric']['row_xlsx'])) + '\n'
+                                else:
+                                    str_to_save += line
+                            elif i + 1 in data['light_sym']['row_txt'] and type(data['light_sym']['row_xlsx']) is int:
+                                if sheet.cell_type(row_number, data['light_sym']['row_xlsx']) == 2:
+                                    str_to_save += str(sheet.cell_value(row_number, data['light_sym']['row_xlsx'])) + '\n'
+                                else:
+                                    str_to_save += line
                             else:
                                 str_to_save += line
                     f = open(name_file_to_save, 'w+')

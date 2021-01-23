@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 import os
 
 
-link = 'https://www.kinonh.pl/artykul.do?id=2371'
+link = 'https://www.kinonh.pl/artykul.do?id=2412'
 r = r'href="(.+?)"'
 base = 'https://www.kinonh.pl/'
 
